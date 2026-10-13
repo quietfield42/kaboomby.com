@@ -389,3 +389,5 @@ section{padding:clamp(52px,8vw,96px) 0}
 .theatre.no-alpha .kb-player.on img{opacity:1;animation:kb-hop 1.1s ease-in-out infinite}
 @keyframes kb-hop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-5%) rotate(-4deg)}60%{transform:translateY(0) rotate(3deg)}}
 @media (prefers-reduced-motion:reduce){.theatre.no-alpha .kb-player.on img{animation:none}}
+.launch-link{color:#FFD45A;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.launch-link:hover{color:#fff}
