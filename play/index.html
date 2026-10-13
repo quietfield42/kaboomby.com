@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spot Kaboomby · Find all five</title>
+<meta name="description" content="Five little Kaboombys are hiding in every picture. How fast can you find them all? Twenty pictures, no sign-up.">
+<link rel="canonical" href="https://kaboomby.com/play/">
+<meta name="theme-color" content="#2C1656">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kaboomby">
+<meta property="og:title" content="Spot Kaboomby · Find all five">
+<meta property="og:description" content="Five little Kaboombys are hiding in every picture. How fast can you find them all?">
+<meta property="og:url" content="https://kaboomby.com/play/">
+<meta property="og:image" content="https://kaboomby.com/assets/og-kaboomby.jpg">
+<link rel="icon" href="../assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/icon-180.png">
+<link rel="preload" href="../assets/fredoka-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/scenes.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#game">Skip to the game</a>
+<header class="site-header dark">
+  <div class="wrap">
+    <a class="name" href="../"><img src="../assets/icon-180.png" alt="" width="40" height="40">Kaboomby</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav"><span class="sr-only">Menu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="../">Meet Kaboomby</a>
+      <a href="../#draw">Things to draw</a>
+      <a class="btn btn-gold" href="https://kaboombit.com/">Discover Kaboombit</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="game-page">
+  <div class="wrap" id="game">
+    <div class="game-head">
+      <div class="reactor" id="reactor" aria-hidden="true"><img src="../assets/spot-intro.webp" alt="" width="400" height="400"><video playsinline preload="none"></video></div>
+      <div>
+        <h1>Spot <span class="gold">Kaboomby</span></h1>
+        <p class="say" id="say" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="hud">
+      <span class="stat" id="title">Loading…</span>
+      <span class="stat">Found <b id="count">0</b> of 5</span>
+      <span class="stat"><b id="time">0.0</b> seconds</span>
+    </div>
+    <div class="tools">
+      <button class="gbtn" id="pause" type="button" aria-pressed="false" hidden>Pause</button>
+      <button class="gbtn" id="hint" type="button">Hint</button>
+      <button class="gbtn" id="zoom" type="button" aria-pressed="false">Zoom in</button>
+      <button class="gbtn" id="sound" type="button" aria-pressed="true">Sound on</button>
+      <button class="gbtn go" id="next" type="button">Next picture</button>
+    </div>
+    <div class="viewport" id="viewport" tabindex="0" aria-label="Game picture. Tap a hiding Kaboomby, or use the clues below.">
+      <div class="board" id="board"><img id="art" alt="" width="1536" height="1024"></div>
+      <div class="cover" id="cover"><div><p id="coverText">Loading the picture…</p><button class="btn btn-gold btn-big" id="coverBtn" type="button" hidden>Start finding!</button></div></div>
+    </div>
+    <p id="msg" role="status" style="min-height:1.5em;margin:10px 4px 0;font-weight:700"></p>
+    <section class="results" id="results" hidden aria-live="polite">
+      <h2>You found all five!</h2>
+      <p id="score"></p>
+      <p id="best"></p>
+      <div class="btn-row" style="margin-top:14px"><button class="btn btn-gold" id="again" type="button">Next picture</button></div>
+    </section>
+    <details class="clues">
+      <summary>Find them using clues</summary>
+      <div class="list" id="clueList"></div>
+    </details>
+    <p class="game-note">Best times are saved only in this browser on this device. No names, no accounts, no tracking. <button id="reset" type="button">Reset my scores</button> · <a href="https://kaboombit.com/privacy.html" style="color:#fff">Privacy</a></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p style="font:600 1.5rem/1 var(--display);color:#fff;margin:0 0 10px">Kaboomby</p>
+        <p style="max-width:40ch;margin:0">For grown-ups: Kaboomby is the guide inside the Kaboombit app. This site has no accounts, chat or uploads, and collects no information about your child. Game scores stay in your own browser.</p>
+      </div>
+      <ul class="foot-links" aria-label="Footer">
+        <li><a href="https://kaboombit.com/">Kaboombit</a></li>
+        <li><a href="https://kaboombit.com/privacy.html">Privacy</a></li>
+        <li><a href="https://kaboombit.com/terms.html">Terms</a></li>
+        <li><a href="https://kaboombit.com/support.html">Support</a></li>
+      </ul>
+    </div>
+    <p class="fine">Kaboomby and Kaboombit are made by The Pet Wellbeing Company PTY LTD. © <span id="year">2026</span></p>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+<script src="../assets/game.js" defer></script>
+</body>
+</html>
