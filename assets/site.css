@@ -136,7 +136,8 @@ section{padding:clamp(52px,8vw,96px) 0}
 .site-header.dark .brand-word{font:600 1.7rem/1 var(--display);color:#fff;text-decoration:none;letter-spacing:-.01em}
 .site-header.dark .brand-word span{color:var(--gold)}
 @media (max-width:860px){.site-header.dark .nav{background:var(--stage-deep);border-bottom-color:rgba(255,255,255,.1)}}
-.site-header.dark .brand img{filter:brightness(0) invert(1)}
+.site-header.dark .brand{background:#FFF8EC;border-radius:14px;padding:3px 10px;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.foot-logo{background:#FFF8EC;border-radius:14px;padding:6px 12px;display:inline-block}
 
 /* Buttons on dark */
 .btn-light{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45)}

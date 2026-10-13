@@ -38,7 +38,8 @@
     });
   });
 
-  // kaboombit.com hero film: silent, plays once when visible (never with reduced motion), poster otherwise
+  // kaboombit.com hero film: plays once, muted, when visible (never with reduced motion), poster otherwise.
+  // A tap plays it from the start with Kaboomby's "Abra Kaboombit!" sound; the Sound button toggles it.
   var frame = document.getElementById('film');
   if (frame) {
     var film = frame.querySelector('video');
@@ -46,8 +47,14 @@
     var played = false;
     function showFailed() { frame.classList.remove('playing', 'started'); if (asked) frame.classList.add('failed'); }
     var asked = false;
+    var soundBtn = frame.querySelector('[data-sound]');
+    function setSound(on) {
+      film.muted = !on;
+      if (soundBtn) { soundBtn.textContent = on ? 'Sound off' : 'Sound on'; soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+    }
+    if (soundBtn) soundBtn.addEventListener('click', function () { setSound(film.muted); });
     function go(fromStart, byUser) {
-      if (byUser) asked = true;
+      if (byUser) { asked = true; if (fromStart) setSound(true); }
       frame.classList.remove('failed');
       if (fromStart) { try { film.currentTime = 0; } catch (e) {} }
       if (film.networkState === 3) { showFailed(); return; }
