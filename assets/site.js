@@ -92,14 +92,14 @@
   var theatre = document.querySelector('.theatre');
   if (theatre) {
     var holder = theatre.querySelector('.kb-player');
-    var still = holder.querySelector('img');
     var line = theatre.querySelector('.caption-line');
     var clip = null;
-    // Transparent WebM works in Chrome, Edge, Firefox and Android. Safari and every iPhone browser get the purple-backed MP4.
+    // Transparent WebM works in Chrome, Edge, Firefox and Android. Safari and every iPhone browser play the MP4 hidden
+    // for its sound while the see-through still hops in front of the stage art.
     var ua = navigator.userAgent;
     var webkitOnly = /iP(hone|ad|od)/.test(ua) || (/Safari\//.test(ua) && !/(Chrome|Chromium|CriOS|Edg|Firefox|FxiOS|OPR)\//.test(ua)) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     var alphaOk = !webkitOnly && document.createElement('video').canPlayType('video/webm; codecs="vp9, opus"') !== '';
-    if (!alphaOk) { theatre.classList.add('no-alpha'); still.src = holder.dataset.stillMp4; }
+    if (!alphaOk) theatre.classList.add('no-alpha');
     function settle(msg) {
       if (clip) clip.pause();
       holder.classList.remove('on');

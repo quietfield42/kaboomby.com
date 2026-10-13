@@ -378,3 +378,14 @@ section{padding:clamp(52px,8vw,96px) 0}
 .theatre .wrap{padding-left:calc(clamp(26px,9vw,130px) + 10px);padding-right:calc(clamp(26px,9vw,130px) + 10px)}
 .spot-wrap{width:min(100%,520px,max(240px,calc(100svh - 380px)))}
 .theatre.done .spot-wrap{width:min(100%,460px,max(220px,calc(100svh - 470px)))}
+
+/* kaboomby.com: Kaboomby stands on the gold platform of the app's "Drawing Wall" stage art (Textured Stage v1).
+   The art is 2:3; at 100% width and 50% down, its platform (79.5% of its height) meets his feet (94% of the square). */
+.backdrop{position:absolute;inset:0;border-radius:28px;border:4px solid var(--gold);background:#F6EBD9 url(stage-drawing-wall.webp) center 50%/100% auto no-repeat;box-shadow:0 18px 40px rgba(20,8,44,.45);z-index:0}
+.spot-wrap .kb-player{z-index:1}
+.spot-wrap::after{display:none}
+/* Safari and iPhone can't show see-through video: the clip plays hidden for its sound while the see-through still hops */
+.theatre.no-alpha .kb-player.on video{opacity:0}
+.theatre.no-alpha .kb-player.on img{opacity:1;animation:kb-hop 1.1s ease-in-out infinite}
+@keyframes kb-hop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-5%) rotate(-4deg)}60%{transform:translateY(0) rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.theatre.no-alpha .kb-player.on img{animation:none}}
