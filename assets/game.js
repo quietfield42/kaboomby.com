@@ -96,7 +96,7 @@
   }
   function start() {
     if (!imgReady || running || finished) return;
-    if (root.classList.contains('kb-play') && (phoneWide.matches || phoneTall.matches)) goFull();
+    if (root.classList.contains('kb-play') && phoneWide.matches) goFull();
     react('intro');
     resume();
     $('msg').textContent = 'Find all five Kaboomby characters!';
@@ -242,7 +242,7 @@
   var root = document.documentElement;
   var phoneWide = window.matchMedia('(orientation: landscape) and (max-height: 540px)');
   var phoneTall = window.matchMedia('(orientation: portrait) and (max-width: 600px)');
-  var chosen = false, left = false, upright = false; // chosen: tapped Full screen; left: tapped Exit; upright: chose to play upright
+  var chosen = false, left = false; // chosen: tapped Full screen; left: tapped Exit
   function lockSideways() {
     try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function () {}); } catch (e) {}
   }
@@ -259,9 +259,6 @@
     var play = chosen || (phoneWide.matches && !left);
     var was = root.classList.contains('kb-play');
     root.classList.toggle('kb-play', play);
-    var turn = phoneTall.matches && !upright;
-    $('turn').hidden = !turn;
-    if (turn && running) pause('Turn your phone sideways to keep finding.');
     if (was && !play) view.scrollIntoView({ block: 'center' });
   }
   function onTurn() { if (!phoneWide.matches) left = false; layout(); }
@@ -270,9 +267,8 @@
   ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
     document.addEventListener(ev, function () { if (!document.fullscreenElement && !document.webkitFullscreenElement && chosen) { chosen = false; layout(); } });
   });
-  $('full').addEventListener('click', function () { chosen = true; left = false; upright = false; goFull(); layout(); });
+  $('full').addEventListener('click', function () { chosen = true; left = false; goFull(); layout(); });
   $('exit').addEventListener('click', function () { chosen = false; left = true; leaveFull(); layout(); });
-  $('upright').addEventListener('click', function () { upright = true; chosen = false; leaveFull(); layout(); });
   layout();
 
   // Read-only hooks for automated checks

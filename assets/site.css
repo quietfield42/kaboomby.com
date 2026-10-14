@@ -415,11 +415,16 @@ html.kb-play,html.kb-play body{overflow:hidden;height:100%;overscroll-behavior:n
 .kb-play .tools .go{grid-column:1/-1}
 .kb-play #msg{font-size:.8rem;line-height:1.25;min-height:0!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .kb-play .results{position:fixed;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92vw,380px);background:var(--stage-deep);border:3px solid var(--gold);box-shadow:0 20px 60px rgba(0,0,0,.6);text-align:center}
-.turn{position:absolute;inset:0;z-index:4;display:grid;place-items:center;text-align:center;padding:16px;background:#1d0d3d}
-.turn[hidden]{display:none}
-.turn p{font:600 1.25rem/1.25 var(--display);color:var(--gold);margin:12px 0 14px}
-.turn-phone{width:44px;height:74px;margin:0 auto;border:4px solid #fff;border-radius:10px;position:relative;animation:kb-turn 2.2s ease-in-out infinite}
-.turn-phone::after{content:"";position:absolute;left:50%;bottom:5px;width:12px;height:3px;margin-left:-6px;border-radius:2px;background:#fff}
+.cover .turn-tip{display:none;margin:14px auto 0;max-width:30ch;font-size:.92rem;font-weight:700;color:#E8DDF8;align-items:center;justify-content:center;gap:10px}
+@media (orientation:portrait) and (max-width:600px){.cover .turn-tip{display:flex}}
+.turn-phone{flex:none;width:16px;height:26px;border:2.5px solid currentColor;border-radius:4px;animation:kb-turn 2.4s ease-in-out infinite}
 @keyframes kb-turn{0%,25%{transform:rotate(0)}55%,85%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
-@media (prefers-reduced-motion:reduce){.turn-phone{animation:none;transform:rotate(-90deg)}}
-.kb-play .turn{position:fixed;z-index:70}
+@media (prefers-reduced-motion:reduce){.turn-phone{animation:none}}
+/* Full screen held upright: the picture under Kaboomby and the controls, still filling the screen */
+@media (orientation:portrait){
+  .kb-play #game{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto minmax(0,1fr) auto;padding-top:max(8px,env(safe-area-inset-top))}
+  .kb-play #game>*{grid-column:1}
+  .kb-play #game>.viewport{grid-row:4;width:100%;height:auto;max-height:100%;align-self:center}
+  .kb-play #msg{grid-row:5}
+  .kb-play .tools{grid-template-columns:repeat(3,1fr)}
+}
