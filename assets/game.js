@@ -96,6 +96,7 @@
   }
   function start() {
     if (!imgReady || running || finished) return;
+    if (root.classList.contains('kb-play') && (phoneWide.matches || phoneTall.matches)) goFull();
     react('intro');
     resume();
     $('msg').textContent = 'Find all five Kaboomby characters!';
@@ -236,6 +237,43 @@
       es.forEach(function (e) { if (e.intersectionRatio < 0.3) pause('Paused while the picture was out of sight.'); });
     }, { threshold: [0, 0.3] }).observe(view);
   }
+
+  // ---------- Sideways full screen: a phone turned sideways gets the whole screen for the game ----------
+  var root = document.documentElement;
+  var phoneWide = window.matchMedia('(orientation: landscape) and (max-height: 540px)');
+  var phoneTall = window.matchMedia('(orientation: portrait) and (max-width: 600px)');
+  var chosen = false, left = false, upright = false; // chosen: tapped Full screen; left: tapped Exit; upright: chose to play upright
+  function lockSideways() {
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(function () {}); } catch (e) {}
+  }
+  function goFull() {
+    var rq = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (!rq || document.fullscreenElement || document.webkitFullscreenElement) { lockSideways(); return; }
+    try { var p = rq.call(root, { navigationUI: 'hide' }); if (p && p.then) p.then(lockSideways, function () {}); else lockSideways(); } catch (e) {}
+  }
+  function leaveFull() {
+    var ex = document.exitFullscreen || document.webkitExitFullscreen;
+    if (ex && (document.fullscreenElement || document.webkitFullscreenElement)) { try { var p = ex.call(document); if (p && p.catch) p.catch(function () {}); } catch (e) {} }
+  }
+  function layout() {
+    var play = chosen || (phoneWide.matches && !left);
+    var was = root.classList.contains('kb-play');
+    root.classList.toggle('kb-play', play);
+    var turn = phoneTall.matches && !upright;
+    $('turn').hidden = !turn;
+    if (turn && running) pause('Turn your phone sideways to keep finding.');
+    if (was && !play) view.scrollIntoView({ block: 'center' });
+  }
+  function onTurn() { if (!phoneWide.matches) left = false; layout(); }
+  if (phoneWide.addEventListener) { phoneWide.addEventListener('change', onTurn); phoneTall.addEventListener('change', onTurn); }
+  else { phoneWide.addListener(onTurn); phoneTall.addListener(onTurn); }
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+    document.addEventListener(ev, function () { if (!document.fullscreenElement && !document.webkitFullscreenElement && chosen) { chosen = false; layout(); } });
+  });
+  $('full').addEventListener('click', function () { chosen = true; left = false; upright = false; goFull(); layout(); });
+  $('exit').addEventListener('click', function () { chosen = false; left = true; leaveFull(); layout(); });
+  $('upright').addEventListener('click', function () { upright = true; chosen = false; leaveFull(); layout(); });
+  layout();
 
   // Read-only hooks for automated checks
   window.kbSpot = { scene: function () { return scenes[index]; }, found: function () { return found.size; }, running: function () { return running; } };

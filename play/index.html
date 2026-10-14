@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Spot Kaboomby · Find all five</title>
 <meta name="description" content="Five little Kaboombys are hiding in every picture. How fast can you find them all? Twenty pictures, no sign-up.">
 <link rel="canonical" href="https://kaboomby.com/play/">
@@ -60,10 +60,13 @@
       <button class="gbtn" id="hint" type="button">Hint</button>
       <button class="gbtn" id="zoom" type="button" aria-pressed="false">Zoom in</button>
       <button class="gbtn" id="sound" type="button" aria-pressed="true">Sound on</button>
+      <button class="gbtn" id="full" type="button">Full screen</button>
+      <button class="gbtn" id="exit" type="button">Exit</button>
       <button class="gbtn go" id="next" type="button">Next picture</button>
     </div>
     <div class="viewport" id="viewport" tabindex="0" aria-label="Game picture. Tap a hiding Kaboomby, or use the clues below.">
       <div class="board" id="board"><img id="art" alt="" width="1536" height="1024"></div>
+      <div class="turn" id="turn" hidden><div><div class="turn-phone" aria-hidden="true"></div><p>Turn your phone sideways to play!</p><button class="gbtn" id="upright" type="button">Play upright instead</button></div></div>
       <div class="cover" id="cover"><div><p id="coverText">Loading the picture…</p><button class="btn btn-gold btn-big" id="coverBtn" type="button" hidden>Start finding!</button></div></div>
     </div>
     <p id="msg" role="status" style="min-height:1.5em;margin:10px 4px 0;font-weight:700"></p>
