@@ -428,3 +428,23 @@ html.kb-play,html.kb-play body{overflow:hidden;height:100%;overscroll-behavior:n
   .kb-play #msg{grid-row:5}
   .kb-play .tools{grid-template-columns:repeat(3,1fr)}
 }
+/* Spot Kaboomby: soft bubbles drifting up behind the game, quiet enough not to pull eyes off the picture */
+.game-page{position:relative;isolation:isolate;overflow:hidden}
+.game-page::before,.game-page::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+.game-page::before{
+  background-image:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.07) 0 21px,rgba(255,255,255,.2) 22px 23px,transparent 24px),
+    radial-gradient(circle at 10.6% 16.4%,rgba(255,255,255,.35) 0 3px,transparent 4px),
+    radial-gradient(circle at 68% 34%,rgba(255,255,255,.05) 0 12px,rgba(255,255,255,.16) 13px 14px,transparent 15px),
+    radial-gradient(circle at 40% 72%,rgba(255,255,255,.06) 0 32px,rgba(255,255,255,.15) 33px 34px,transparent 35px),
+    radial-gradient(circle at 38.2% 69.6%,rgba(255,255,255,.3) 0 4px,transparent 5px),
+    radial-gradient(circle at 88% 82%,rgba(255,255,255,.05) 0 8px,rgba(255,255,255,.18) 9px 10px,transparent 11px);
+  background-size:440px 560px;animation:kb-bubbles 46s linear infinite}
+.game-page::after{
+  background-image:
+    radial-gradient(circle at 30% 20%,rgba(255,212,90,.07) 0 14px,rgba(255,212,90,.2) 15px 16px,transparent 17px),
+    radial-gradient(circle at 78% 58%,rgba(255,255,255,.04) 0 24px,rgba(255,255,255,.13) 25px 26px,transparent 27px),
+    radial-gradient(circle at 16% 86%,rgba(255,212,90,.08) 0 6px,rgba(255,212,90,.22) 7px 8px,transparent 9px);
+  background-size:330px 420px;background-position:120px 0;animation:kb-bubbles-b 31s linear infinite}
+@keyframes kb-bubbles{to{background-position:0 -560px}}
+@keyframes kb-bubbles-b{to{background-position:120px -420px}}
