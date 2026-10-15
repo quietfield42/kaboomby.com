@@ -230,8 +230,11 @@
     }
   });
 
-  // Pause when the tab is hidden or the picture is scrolled mostly out of sight
+  // Pause when the tab is hidden, the window loses focus, or the picture is scrolled mostly out of sight
   document.addEventListener('visibilitychange', function () { if (document.hidden) pause('Paused while you were away.'); });
+  // Also when another window, system sheet or call covers the game, or the page is put away
+  window.addEventListener('blur', function () { pause('Paused while you were away.'); });
+  window.addEventListener('pagehide', function () { pause('Paused while you were away.'); });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.intersectionRatio < 0.3) pause('Paused while the picture was out of sight.'); });

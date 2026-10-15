@@ -51,8 +51,13 @@
     function setSound(on) {
       film.muted = !on;
       if (soundBtn) { soundBtn.textContent = on ? 'Sound off' : 'Sound on'; soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+      frame.classList.toggle('muted', !on);
     }
-    if (soundBtn) soundBtn.addEventListener('click', function () { setSound(film.muted); });
+    // The film's sound ("Abra Kaboombit!") is in its first 3 seconds, so turning sound on replays it from the start.
+    if (soundBtn) soundBtn.addEventListener('click', function () { if (film.muted) go(true, true); else setSound(false); });
+    var hint = frame.querySelector('[data-soundhint]');
+    if (hint) hint.addEventListener('click', function () { go(true, true); });
+    frame.classList.add('muted');
     function go(fromStart, byUser) {
       if (byUser) { asked = true; if (fromStart) setSound(true); }
       frame.classList.remove('failed');

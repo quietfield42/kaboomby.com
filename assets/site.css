@@ -392,6 +392,36 @@ section{padding:clamp(52px,8vw,96px) 0}
 .launch-link{color:#FFD45A;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .launch-link:hover{color:#fff}
 
+/* Free demo and unlock panel (WEBSITE-2026-10-14-FREE-DEMO-COPY, Unlock Features Panel Brief) */
+.hero-demo{color:#EADFFA;margin:-4px 0 18px;font-weight:700}
+.hero-demo a{color:var(--gold)}
+.demo-band{background:var(--cream)}
+.demo-card{max-width:760px;margin:32px auto 0;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(22px,4vw,36px)}
+.ticks{list-style:none;padding:0;margin:0 0 14px}
+.ticks li{position:relative;padding-left:34px;margin-bottom:10px}
+.ticks li::before{content:"";position:absolute;left:0;top:.2em;width:22px;height:22px;border-radius:50%;background:var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%2330223E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.demo-note{margin:0;color:var(--ink-soft);font-size:.98rem}
+.unlock-head{margin-top:clamp(48px,7vw,80px)}
+.unlock-grid{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.unlock-tile{background:#fff;border-radius:var(--radius-sm);border:1px solid var(--lavender-2);padding:22px 20px;text-align:center}
+.unlock-tile h3{font-size:1.2rem;margin:14px 0 6px}
+.unlock-tile p{color:var(--ink-soft);margin:0;font-size:.98rem}
+.u-icon{position:relative;display:grid;place-items:center;width:92px;height:92px;margin:0 auto;border-radius:50%;background:var(--lavender);color:var(--purple-deep)}
+.u-icon>svg{width:52px;height:52px}
+.lock{position:absolute;right:-4px;bottom:-4px;width:38px;height:38px;border-radius:50%;background:var(--purple);color:var(--gold);display:grid;place-items:center;box-shadow:0 3px 0 var(--purple-deep)}
+.lock svg{width:22px;height:22px}
+.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.route{background:var(--purple-deep);color:#EADFFA;border-radius:var(--radius-sm);padding:22px}
+.route h3{color:#fff;margin-bottom:6px}
+.route .price{font:600 1.45rem/1.2 var(--display);color:var(--gold);margin:0 0 8px}
+.route .price small{display:block;font:700 .9rem/1.3 var(--body);color:#CDBDE8}
+.route p:last-child{margin:0}
+.routes-note{max-width:62ch;margin:22px auto 0;color:var(--ink-soft);font-size:.98rem}
+.tag{display:inline-block;margin-left:auto;font:800 .72rem/1 var(--body);letter-spacing:.04em;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.14);color:#EADFFA;white-space:nowrap}
+.tag-free{background:var(--gold);color:var(--ink)}
+@media (max-width:860px){.unlock-grid{grid-template-columns:repeat(2,1fr)}.routes{grid-template-columns:1fr}}
+@media (max-width:480px){.unlock-grid{gap:12px}.unlock-tile{padding:18px 12px}.u-icon{width:76px;height:76px}.u-icon>svg{width:42px;height:42px}}
+
 /* Spot Kaboomby sideways: on a phone turned sideways (or after "Full screen") the game fills the whole screen,
    the picture as big as it fits on the left and Kaboomby with the controls in a slim rail on the right. */
 #exit,.kb-play #full{display:none}
@@ -448,3 +478,8 @@ html.kb-play,html.kb-play body{overflow:hidden;height:100%;overscroll-behavior:n
   background-size:330px 420px;background-position:120px 0;animation:kb-bubbles-b 31s linear infinite}
 @keyframes kb-bubbles{to{background-position:0 -560px}}
 @keyframes kb-bubbles-b{to{background-position:120px -420px}}
+
+/* Hero film: autoplay has to be silent, so a clear "Tap for sound" pill shows while it plays muted */
+.soundhint{display:none;position:absolute;left:12px;top:12px;border:0;border-radius:999px;background:var(--gold);color:var(--ink);font:800 .9rem/1 var(--body);padding:10px 16px;min-height:40px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.stage-frame.started.muted .soundhint{display:inline-flex;align-items:center}
+.stage-frame.failed .soundhint{display:none}
