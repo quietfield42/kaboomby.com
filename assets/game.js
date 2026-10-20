@@ -84,7 +84,9 @@
       k.style.left = p.cx * 100 + '%'; k.style.top = p.cy * 100 + '%'; k.style.width = p.w * 100 + '%';
       k.style.transform = 'translate(-50%,-50%) rotate(' + p.turn + 'rad)';
       board.appendChild(k);
-      return { id: 'kaboomby-' + (i + 1), clue: spotClue(p), hit: { x: p.cx - 0.032, y: p.cy - 0.06, w: 0.064, h: 0.12 } };
+      // Hit box: the drawn Kaboomby plus 10% on each side, so a tap anywhere on him counts
+      var hw = p.w * 1.2, hh = p.w * SPOT.spriteRatio * SPOT.aspect * 1.2;
+      return { id: 'kaboomby-' + (i + 1), clue: spotClue(p), hit: { x: p.cx - hw / 2, y: p.cy - hh / 2, w: hw, h: hh } };
     });
   }
 
