@@ -45,6 +45,49 @@
   clip.addEventListener('ended', function () { reactor.classList.remove('on'); });
   clip.addEventListener('error', function () { reactor.classList.remove('on'); });
 
+  // ---------- Where the five Kaboombys hide: new spots every round ----------
+  // Same rules as the app (build 28, "Spot positions v2.md"): centres inside the safe zone, clear of
+  // the corners, apart from each other, and moved away from the last round's spots on this picture.
+  var SPOT = { count: 5, minX: 0.08, maxX: 0.92, minY: 0.20, maxY: 0.82, minGap: 0.16, minMove: 0.07,
+    minW: 0.095, maxW: 0.12, maxTurn: 0.2, aspect: 1536 / 1024, spriteRatio: 360 / 330,
+    keepOut: [[0, 0, 0.18, 0.22], [0.80, 0, 1, 0.22], [0.78, 0.74, 1, 1]] };
+  function spotDist(a, b) { var dx = a.cx - b.cx, dy = (a.cy - b.cy) / SPOT.aspect; return Math.sqrt(dx * dx + dy * dy); }
+  function pickSpots(avoid) {
+    for (var attempt = 0; attempt < 50; attempt++) {
+      var out = [];
+      for (var tries = 0; tries < 400 && out.length < SPOT.count; tries++) {
+        var p = { cx: SPOT.minX + Math.random() * (SPOT.maxX - SPOT.minX), cy: SPOT.minY + Math.random() * (SPOT.maxY - SPOT.minY) };
+        if (SPOT.keepOut.some(function (r) { return p.cx >= r[0] && p.cx < r[2] && p.cy >= r[1] && p.cy < r[3]; })) continue;
+        if (out.some(function (q) { return spotDist(p, q) < SPOT.minGap; })) continue;
+        if (avoid.some(function (q) { return spotDist(p, q) < SPOT.minMove; })) continue;
+        p.w = SPOT.minW + Math.random() * (SPOT.maxW - SPOT.minW);
+        p.turn = (Math.random() * 2 - 1) * SPOT.maxTurn;
+        out.push(p);
+      }
+      if (out.length === SPOT.count) return out;
+    }
+    return [{ cx: 0.20, cy: 0.35, w: 0.11, turn: 0 }, { cx: 0.35, cy: 0.68, w: 0.11, turn: 0 }, { cx: 0.52, cy: 0.40, w: 0.11, turn: 0 },
+      { cx: 0.70, cy: 0.62, w: 0.11, turn: 0 }, { cx: 0.84, cy: 0.36, w: 0.11, turn: 0 }];
+  }
+  function spotClue(p) {
+    var side = p.cx < 0.36 ? 'left' : (p.cx > 0.64 ? 'right' : 'middle'), level = p.cy < 0.5 ? 'upper' : 'lower';
+    return side === 'middle' ? 'Look in the ' + level + ' middle' : 'Search the ' + level + '-' + side + ' area';
+  }
+  function placeSpots(s) {
+    var key = 'kb-spot-pos:' + s.id, last = read(key, []);
+    var spots = pickSpots(Array.isArray(last) ? last.filter(function (q) { return q && isFinite(q.cx) && isFinite(q.cy); }) : []);
+    write(key, spots.map(function (p) { return { cx: +p.cx.toFixed(4), cy: +p.cy.toFixed(4) }; }));
+    board.querySelectorAll('.kb').forEach(function (k) { k.remove(); });
+    s.targets = spots.map(function (p, i) {
+      var k = document.createElement('img');
+      k.className = 'kb'; k.alt = ''; k.src = '../assets/spot-kaboomby.webp';
+      k.style.left = p.cx * 100 + '%'; k.style.top = p.cy * 100 + '%'; k.style.width = p.w * 100 + '%';
+      k.style.transform = 'translate(-50%,-50%) rotate(' + p.turn + 'rad)';
+      board.appendChild(k);
+      return { id: 'kaboomby-' + (i + 1), clue: spotClue(p), hit: { x: p.cx - 0.032, y: p.cy - 0.06, w: 0.064, h: 0.12 } };
+    });
+  }
+
   // ---------- Picture order: shuffled bag, no repeats until all twenty are played ----------
   function shuffled(n) {
     var a = []; for (var i = 0; i < n; i++) a.push(i);
@@ -123,6 +166,7 @@
     };
     art.onerror = function () { showCover('This picture could not load.', 'Try the next picture', function () { loadScene(takeNext()); }); };
     art.src = '../assets/' + s.board;
+    placeSpots(s);
     var list = $('clueList'); list.replaceChildren();
     s.targets.forEach(function (t) {
       var b = document.createElement('button');

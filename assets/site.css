@@ -320,6 +320,7 @@ section{padding:clamp(52px,8vw,96px) 0}
 .board{position:relative;width:100%;aspect-ratio:3/2;user-select:none;-webkit-user-select:none;cursor:crosshair}
 .board.zoomed{width:200%}
 .board img{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.board img.kb{inset:auto;height:auto}
 .mark{position:absolute;transform:translate(-50%,-50%);border-radius:50%;border:4px solid var(--gold);box-shadow:0 0 0 4px rgba(76,39,131,.65),0 0 18px rgba(255,212,90,.8);pointer-events:none;animation:found .5s cubic-bezier(.34,1.56,.64,1) both}
 .mark.hint{border-style:dashed;border-color:#fff;box-shadow:0 0 0 4px rgba(76,39,131,.65);animation:hintp 1.2s ease-in-out infinite}
 @keyframes found{from{transform:translate(-50%,-50%) scale(.3);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
