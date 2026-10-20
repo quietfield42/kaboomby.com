@@ -52,6 +52,12 @@
     minW: 0.095, maxW: 0.12, maxTurn: 0.2, aspect: 1536 / 1024, spriteRatio: 360 / 330,
     keepOut: [[0, 0, 0.18, 0.22], [0.80, 0, 1, 0.22], [0.78, 0.74, 1, 1]] };
   function spotDist(a, b) { var dx = a.cx - b.cx, dy = (a.cy - b.cy) / SPOT.aspect; return Math.sqrt(dx * dx + dy * dy); }
+  // Tap area: the drawn Kaboomby plus 10% on each side, so a tap anywhere on him counts
+  function spotHit(p) {
+    var hw = p.w * 1.2, hh = p.w * SPOT.spriteRatio * SPOT.aspect * 1.2;
+    return { x: p.cx - hw / 2, y: p.cy - hh / 2, w: hw, h: hh };
+  }
+  function overlaps(a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; }
   function pickSpots(avoid) {
     for (var attempt = 0; attempt < 50; attempt++) {
       var out = [];
@@ -62,6 +68,8 @@
         if (avoid.some(function (q) { return spotDist(p, q) < SPOT.minMove; })) continue;
         p.w = SPOT.minW + Math.random() * (SPOT.maxW - SPOT.minW);
         p.turn = (Math.random() * 2 - 1) * SPOT.maxTurn;
+        // Two tap areas never overlap, so a tap always means one Kaboomby
+        if (out.some(function (q) { return overlaps(spotHit(q), spotHit(p)); })) continue;
         out.push(p);
       }
       if (out.length === SPOT.count) return out;
@@ -84,9 +92,7 @@
       k.style.left = p.cx * 100 + '%'; k.style.top = p.cy * 100 + '%'; k.style.width = p.w * 100 + '%';
       k.style.transform = 'translate(-50%,-50%) rotate(' + p.turn + 'rad)';
       board.appendChild(k);
-      // Hit box: the drawn Kaboomby plus 10% on each side, so a tap anywhere on him counts
-      var hw = p.w * 1.2, hh = p.w * SPOT.spriteRatio * SPOT.aspect * 1.2;
-      return { id: 'kaboomby-' + (i + 1), clue: spotClue(p), hit: { x: p.cx - hw / 2, y: p.cy - hh / 2, w: hw, h: hh } };
+      return { id: 'kaboomby-' + (i + 1), clue: spotClue(p), hit: spotHit(p) };
     });
   }
 
